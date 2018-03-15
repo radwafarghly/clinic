@@ -18,8 +18,8 @@ class CreateReservationsTable extends Migration
             $table->float('paid');
             $table->float('change');
             $table->char('type',1);
-            $table->timestamp('date_attendance');
-            $table->timestamp('date_reservation');
+            $table->dateTime('date_attendance');
+            $table->dateTime('date_reservation');
             $table->integer('patient_id')->unsigned();
 
             $table->foreign('patient_id')->references('id')->on('patients')
