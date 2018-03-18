@@ -13,6 +13,6 @@ class Patient extends Model
 
     public function reservation()
     {
-        return $this->belongsTo('App\Reservation','product_colors','product_id','color_id');
+        return $this->belongsTo('App\Reservation','patient_id');
     }
 }

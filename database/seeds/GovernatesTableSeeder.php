@@ -22,6 +22,9 @@ class GovernatesTableSeeder extends Seeder
              [
                 'name'=>'Asyut'
             ],
+            [
+                'name'=>'Minya'
+            ],
              [
                 'name'=>'Beheira'
             ],
@@ -57,9 +60,6 @@ class GovernatesTableSeeder extends Seeder
             ],
             [
                 'name'=>'Matruh'
-            ],
-            [
-                'name'=>'Minya'
             ],
             [
                 'name'=>'Monufia'
