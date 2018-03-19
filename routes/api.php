@@ -25,4 +25,7 @@ Route::get('/getPatient/{id}',['uses'=>'PatientController@getPatient']);
 Route::get('/getPatients/{date}',['uses'=>'PatientController@getPatients']);
 //get data of user who login
 Route::get('/client/getAuthUser',['uses'=>'AuthController@getAuthUser']);
-
+Route::get('/deletePatients/{id}',['uses'=>'PatientController@destroy']);
+Route::get('/deleteReservation/{id}',['uses'=>'ReservationController@destroy']);
+Route::Post('/updatePatient/{id}',['uses'=>'PatientController@update']);
+Route::Post('/updateReservation/{id}',['uses'=>'ReservationController@update']);

@@ -7,6 +7,9 @@ use DB;
 
 class PatientController extends Controller
 {
+
+
+    
     //
     public function getPatient($id)
     {
@@ -25,5 +28,19 @@ class PatientController extends Controller
          ->get();
         
          return response()->json(['patients'=>$patients],201);
+     }
+     public function destroy($id,Patient $item)
+     {
+        $item->find($id)->delete();
+       
+     }
+
+     public function update($id,Request $request)
+     {  
+         $updatePatient=Patient::find($id);
+          
+         $updatePatient->fill($request->all())->save();
+        
+         
      }
 }
