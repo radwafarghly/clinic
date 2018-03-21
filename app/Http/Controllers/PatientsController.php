@@ -88,4 +88,18 @@ class PatientController extends Controller
                  
          ],200);
      }
+     public function destroy($id,Patient $item)
+     {
+        $item->find($id)->delete();
+       
+     }
+
+     public function update($id,Request $request)
+     {  
+         $updatePatient=Patient::find($id);
+          
+         $updatePatient->fill($request->all())->save();
+        
+         
+     }
 }
