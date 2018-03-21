@@ -13,9 +13,15 @@ use Validator;
 class AuthController extends Controller
 {
     //
-     //signup 
+     //signup doctor 
      public function signup(Request $request)
      {
+        $credentials = $request->only('email', 'password','name');
+        $rules = [
+            'name'=>'required',
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
          //validate
          $this->validate($request, [
              "name"=>"required",
@@ -24,6 +30,14 @@ class AuthController extends Controller
                  'required'   
              )
          ]);
+
+         $validator = Validator::make($credentials, $rules);
+         if($validator->fails()) {
+             return response()->json([ 
+                 'message'=> $validator->messages(),
+                 ]);
+         }
+
              //insert into users table
          $user=new User([
              "name"=>$request->input('name'),
@@ -35,13 +49,11 @@ class AuthController extends Controller
  
          
          $user->save();  
-         return response()->json(['message'=>"Create user successfully"],201);
+         return response()->json(['message'=>"Create doctor successfully"],201);
      }
-//signin
+    //signin doctor or sercretary
      public function signin(Request $request)
      {
-        
-                 //$loggin=false;
                 $credentials = $request->only('email', 'password');
                 $rules = [
                     'email' => 'required|email',
@@ -53,7 +65,7 @@ class AuthController extends Controller
                         'response' => 'error', 
                         'message'=> $validator->messages(),
                         'loggin'=>false
-                        ]);
+                    ],400);
                 }
         
                 $token = '';
@@ -73,12 +85,18 @@ class AuthController extends Controller
                         'loggin'=>false
                     ], 500);
                 }
-                
+                $user=User::select('is_doctor','is_active')
+                ->where('email',$request->input('email'))
+                ->get();
                  //$id=JWTAuth::toUser()->id; //this gives error should be authenticated
                 return response()->json([
                     'response' => 'success',
                     'token' =>  $token,
                     'loggin'=>true,
+                    'is_doctor'=>$user[0]['is_doctor'],
+                    'is_active'=>$user[0]['is_active'],
+                    
+
                 ],200);
             }
         
@@ -92,5 +110,7 @@ class AuthController extends Controller
                 ->get();
                 return response()->json($response,200);
             }
+            
+            
         
 }

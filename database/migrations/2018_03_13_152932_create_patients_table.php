@@ -19,8 +19,7 @@ class CreatePatientsTable extends Migration
             $table->char('gender',1);
             $table->integer('age');
             $table->string('phone');
-            $table->string('code');
-            $table->integer('card_number');
+            $table->integer('card_number')->unique();
             $table->timestamps();
         });
     }

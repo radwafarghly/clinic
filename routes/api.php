@@ -25,4 +25,17 @@ Route::get('/getPatient/{id}',['uses'=>'PatientController@getPatient']);
 Route::get('/getPatients/{date}',['uses'=>'PatientController@getPatients']);
 //get data of user who login
 Route::get('/client/getAuthUser',['uses'=>'AuthController@getAuthUser']);
+//add reservation
+Route::post('/addReservation',['uses'=>'ReservationController@addReservation']);
+//retrieve Patients of Today
+Route::get('/getPatientsToday',['uses'=>'PatientController@getPatientsToday']);
+//edit  patient
+Route::post('/updatePatient',['uses'=>'PatientController@update']);
+Route::post('/updateReservation',['uses'=>'ReservationController@update']);
+Route::delete('/deleteReservation/{reservation_id}/{patient_id}',['uses'=>'ReservationController@destroy']);
+Route::get('/reservationDetails/{id}',['uses'=>'ReservationController@reservationDetails']);
+Route::post('/addSecretary',['uses'=>'DoctorController@addSecretary']);
+
+
+
 

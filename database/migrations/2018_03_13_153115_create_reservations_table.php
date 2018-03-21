@@ -18,7 +18,7 @@ class CreateReservationsTable extends Migration
             $table->float('paid');
             $table->float('change');
             $table->char('type',1);
-            $table->dateTime('date_attendance');
+            $table->dateTime('date_attendance')->default(null);
             $table->dateTime('date_reservation');
             $table->integer('patient_id')->unsigned();
 
