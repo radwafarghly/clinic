@@ -21,13 +21,17 @@ class PatientController extends Controller
      //retrieve patients who reserved on this day
      public function getPatients($date)
      {
-        
-         $patients=DB::table('patients')
-         ->join('reservations','patients.id','=','reservations.patient_id')
-         ->select('patients.name','patients.card_number',
-         'patients.id AS patient_id','reservations.id AS reservation_id')
-         ->where('reservations.date_reservation',$date)
-         ->get();
+        //select patients today in DB way
+            $patients=DB::table('patients')
+            ->join('reservations','patients.id','=','reservations.patient_id')
+            ->select('patients.name','patients.card_number',
+            'patients.id AS patient_id','reservations.id AS reservation_id')
+            ->where('reservations.date_reservation',$date)
+            ->get();
+        //select patients in eloquoent way
+        // $patients=Patient::with('reservations')
+        // ->where('reservations.date_reservation','=',$date)
+        // ->get();
          if(empty($patients[0]))
          {
             return response()->json(['message'=>"no patients"],404);
@@ -42,11 +46,17 @@ class PatientController extends Controller
      public function getPatientsToday()
      {
         $date= Carbon::today()->toDateString();
+        //select patients in DB way
         $patients=DB::table('patients')
         ->join('reservations','patients.id','=','reservations.patient_id')
         ->select('patients.name','patients.card_number','patients.id AS patient_id','reservations.id AS reservation_id')
         ->where('reservations.date_reservation',$date)
         ->get();
+
+        //select patients in eloquoent way
+        // $patients=Reservation::with('patients')
+        // ->where('date_reservation','=',$date)
+        // ->get();
        
         return response()->json(['patients'=>$patients],201);
      }
@@ -94,12 +104,4 @@ class PatientController extends Controller
        
      }
 
-     public function update($id,Request $request)
-     {  
-         $updatePatient=Patient::find($id);
-          
-         $updatePatient->fill($request->all())->save();
-        
-         
-     }
 }
